@@ -24,8 +24,7 @@ public class OrdersController {
     @GetMapping
     public ResponseEntity<List<Order>> getAllOrders() {
         try {
-            List<Order> orders = new ArrayList<Order>();
-            ordersService.findAll().forEach(orders::add);
+            List<Order> orders = new ArrayList<>(ordersService.findAll());
             if (orders.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -38,20 +37,15 @@ public class OrdersController {
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable("id") long id) {
         Optional<Order> orderData = ordersService.findById(id);
-        if (orderData.isPresent()) {
-            return new ResponseEntity<>(orderData.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return orderData.map(order -> new ResponseEntity<>(order, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         try {
-            Order entity = new Order(order.getTitle());
-            ordersService.save(entity);
-            return new ResponseEntity<>(entity, HttpStatus.CREATED);
+            Order _order = ordersService.save(order);
+            return new ResponseEntity<>(_order, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
