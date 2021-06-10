@@ -1,7 +1,15 @@
 package ru.geekbrains.spring.first.app.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "orders")
 public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "title")
     private String title;
 
     public Long getId() {
@@ -23,8 +31,12 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long id, String title) {
-        this.id = id;
+    public Order(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Order [id=" + id + ", title=" + title;
     }
 }
