@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS orders
 (
     id     BIGSERIAL PRIMARY KEY,
-    title  VARCHAR(100) NOT NULL
+    title  VARCHAR(255) NOT NULL
 );
 --DROP TABLE IF EXISTS orders
