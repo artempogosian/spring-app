@@ -1,7 +1,6 @@
 package ru.geekbrains.spring.first.app.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.first.app.model.Item;
 import ru.geekbrains.spring.first.app.repositories.ItemRepository;
@@ -24,5 +23,13 @@ public class ItemService {
 
     public Item save(Item item) {
         return itemRepository.save(item);
+    }
+
+    public void deleteById(long id) {
+        itemRepository.deleteById(id);
+    }
+
+    public void deleteAll() {
+        itemRepository.deleteAll();
     }
 }
