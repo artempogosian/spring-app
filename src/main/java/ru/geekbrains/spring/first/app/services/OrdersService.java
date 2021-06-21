@@ -6,6 +6,7 @@ import ru.geekbrains.spring.first.app.model.Order;
 import ru.geekbrains.spring.first.app.repositories.OrdersRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrdersService {
@@ -16,11 +17,15 @@ public class OrdersService {
         this.ordersRepository = ordersRepository;
     }
 
-    public List<Order> findAllOrders() {
+    public List<Order> findAll() {
         return ordersRepository.findAll();
     }
 
-    public void save(Order order) {
-        ordersRepository.save(order);
+    public Optional<Order> findById(long id) {
+        return ordersRepository.findById(id);
+    }
+
+    public Order save(Order order) {
+        return ordersRepository.save(order);
     }
 }
